@@ -59,7 +59,7 @@ export default function Dashboard({ code }) {
   //       setLyrics(res.data.lyrics);
   //     });
   // }, [playingTrack]);
-
+  var htmlObject = document.createElement("div");
   useEffect(() => {
     if (!token) return;
     spotify.setAccessToken(token);
@@ -74,6 +74,8 @@ export default function Dashboard({ code }) {
         console.log("GET response text:");
         console.log(text);
         setLyrics(text);
+
+        htmlObject.innerHTML = lyrics.ly;
       });
   }, [playingTrack]);
 
@@ -90,9 +92,10 @@ export default function Dashboard({ code }) {
         ))}
         {console.log(searchResults.length)}
         {searchResults.length === 0 && (
-          <div className="text-center" style={{ whiteSpace: "pre" }}>
-            {lyrics.ly}
-          </div>
+          <div
+            className="text-center"
+            style={{ whiteSpace: "pre" }}
+            dangerouslySetInnerHTML={{ __html: lyrics.ly }}></div>
         )}
       </div>
       <div>
