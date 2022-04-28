@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import useAuth from "./utility/useAuth";
 import Player from "./Player";
 import TrackSearchResult from "./TrackSearchResult";
-import { Form } from "react-bootstrap";
 import "./css/Dashboard.css";
 import SpotifyWebApi from "spotify-web-api-node";
-import axios from "axios";
 
 import { useDataLayerValue } from "./DataLayer";
 import Header from "./Header";
@@ -77,7 +75,7 @@ export default function Dashboard({ code }) {
 
         htmlObject.innerHTML = lyrics.ly;
       });
-  }, [playingTrack]);
+  }, [playingTrack, htmlObject, lyrics.ly]);
 
   return (
     <div className="main-dashboard">

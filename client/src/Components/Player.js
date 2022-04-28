@@ -3,7 +3,7 @@ import SpotifyPlayer from "react-spotify-web-playback";
 import "./css/Player.css";
 export default function Player({ accessToken, trackUri }) {
   const [play, setPlay] = useState(false);
-  const [next, setNext] = useState(false);
+
   useEffect(() => setPlay(true), [trackUri]);
 
   if (!accessToken) return null;
@@ -34,7 +34,6 @@ export default function Player({ accessToken, trackUri }) {
         magnifySliderOnHover
         syncExternalDevice={true}
         play={play}
-        next={next}
         uris={trackUri ? [trackUri] : []}
       />
     </div>

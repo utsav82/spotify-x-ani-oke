@@ -43,7 +43,7 @@ function Header({ spotify }) {
     });
 
     return () => (cancel = true);
-  }, [token, search]);
+  }, [token, search, dispatch, spotify]);
 
   return (
     <div className="header">
