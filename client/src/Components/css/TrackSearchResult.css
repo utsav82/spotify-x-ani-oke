@@ -1,0 +1,13 @@
+.searchResultOption{
+    display: flex;
+    margin: 2px;
+    align-items: center;
+    cursor: pointer;
+}
+.searchResultOption:hover{
+    background-color: black;
+}
+.searchResultOption > img{
+    padding: 4px;
+    margin-right: 1rem;
+}

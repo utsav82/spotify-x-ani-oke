@@ -1,0 +1,35 @@
+.player-container{
+    position: fixed;
+    margin: 0;
+    width: 100%;
+    bottom: 0;
+    min-height: 80px;
+    background-color: #202020;
+    padding: 1rem 1rem;
+}
+._SliderRSWP{
+    margin-bottom: 12px;
+}
+.rswp__toggle:hover{
+    cursor: pointer;
+    transition: scale 5000ms ease-in-out;
+    transform: scale(1.1);
+}
+._VolumeRSWP > div{
+    flex-direction: row;
+}
+.__w9qa21 > div{
+    background-color: dimgray;
+    box-shadow: none;
+    
+}
+.rrs__track{
+    background-color: #c87dff !important;
+}
+.rrs__range{
+    background-color: #730099 !important;
+}
+.rrs__thumb{
+    cursor: pointer !important;
+    background-color: white !important;
+}
