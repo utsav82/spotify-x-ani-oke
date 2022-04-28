@@ -41,12 +41,7 @@ def search(term, num_results=10, lang="en"):
     html = fetch_results(term, num_results, lang)
     return list(parse_results(html))
 
-
-def _searchLyrics_(query):
-
-    for url in search(f"site:animesonglyrics.com {query}", num_results=5):
-        if "animesonglyrics" in str(url):
-            return url
+# -*- coding: utf-8 -*-
 
 
 class NoResultFound(Exception):
@@ -55,23 +50,25 @@ class NoResultFound(Exception):
     pass
 
 
+class TooManyRequests(Exception):
+    """Raised when number of requests exceed than the expected"""
+
+    pass
+
+
+def _searchLyrics_(query):
+
+    for url in search(f"site:lyrical-nonsense.com {query}", num_results=5):
+        if "lyrical-nonsense" in str(url):
+            return url
+
+
 class Anilyrics:
-    """
-    Retrieves anime lyrics via `animesonglyrics <https://www.animesonglyrics.com/>`__.
-    Parameters
-    ----------
-    query: `str <https://docs.python.org/3/library/string.html#module-string>`__
-        The query to be searched for.
-    Attributes
-    ----------
-    url
-        The url to access the lyrics page.
-    """
 
     def __init__(self, query):
 
         url = _searchLyrics_(query)
-
+        # print(url)
         if not url:
             raise NoResultFound("No lyrics for this song found.")
 
@@ -81,32 +78,25 @@ class Anilyrics:
         req = Request(url=url, headers=headers)
 
         lyrics_page = urlopen(req).read()
+        # print(lyrics_page)
         soup = BeautifulSoup(lyrics_page, "html.parser")
-
-        for breaks in soup.findAll("br"):
-            breaks.replace_with("\n")
+        # print(soup)
 
         self.url = _searchLyrics_(query)
         self._soup = soup
 
     def _lyricsType_(self, div):
 
-        lyrics_container = self._soup.find("div", {"id": div}).text
-        filtered_page = lyrics_container.split("Correct these Lyrics")[0]
-        lyrics = filtered_page[:-4]
-        lyrics = str(re.sub(" +", " ", lyrics)).strip()
-
-        return lyrics
+        lyrics_container = self._soup.find("div", {"class": div})
+        # str(re.sub("olyrictext","romaji-lyrics",lyrics_container))
+        data = ""
+        for child in lyrics_container.children:
+            data = data + str(re.sub("\n", "", str(child)))
+        # print(data)
+        return data
 
     def romaji(self) -> str:
-        """
-        Returns
-        -------
-        list
-            Lyrics in their romaji translation
-        """
-
-        romaji_lyrics = self._lyricsType_("tab1")
+        romaji_lyrics = self._lyricsType_("olyrictext")
         return romaji_lyrics
 
 
